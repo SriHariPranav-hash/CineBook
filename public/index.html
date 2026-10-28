@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090a10">
+  <title>CineBook — Your next movie night</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <a class="logo" href="#"><span class="logo-symbol">C</span><span>CINE<span class="logo-accent">BOOK</span><small>THE MOVIE EXPERIENCE</small></span></a>
+    <div class="nav-center"><a class="nav-active" href="#movies">Movies</a><a href="#how">How it works</a><a href="#admin">Admin</a></div>
+    <button class="nav-booking" id="find-booking-btn">My ticket <span>↗</span></button>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-kicker"><span class="spark">✦</span> YOUR NEXT BIG-SCREEN MOMENT</div>
+        <h1>Stories feel<br>better <em>together.</em></h1>
+        <p>Find your film. Pick your seats. Make it a movie night worth remembering.</p>
+        <a class="button button-gold" href="#movies">Explore movies <span>↓</span></a>
+        <div class="hero-meta"><span>✦ Curated cinema</span><i></i><span>◉ Instant e-tickets</span><i></i><span>⌁ Easy booking</span></div>
+      </div>
+      <div class="hero-art">
+        <div class="hero-glow"></div><div class="hero-ring ring-one"></div><div class="hero-ring ring-two"></div>
+        <div class="floating-card card-back"><span>NOW SHOWING</span><b>YOUR NEXT<br>FAVOURITE FILM</b><small>THE MAGIC STARTS HERE</small></div>
+        <div class="floating-card card-front"><div class="ticket-top"><span>CINEBOOK</span><span>✦ 2026</span></div><div class="ticket-graphic">✦</div><div class="ticket-title">ONE NIGHT.<br><em>ONE STORY.</em></div><div class="ticket-line"></div><div class="ticket-bottom"><span>SCREEN 01</span><span>YOUR SEAT AWAITS →</span></div></div>
+        <div class="floating-chip chip-top">✦ <span>Premium experience</span></div><div class="floating-chip chip-bottom">● <span>Book in seconds</span></div>
+      </div>
+    </section>
+
+    <section class="movie-section" id="movies">
+      <div class="section-head"><div><div class="eyebrow">THE BIG SCREEN LINEUP</div><h2>Now showing<span>.</span></h2><p>Pick a story. We'll save you a seat.</p></div><div class="movie-tools"><div class="search-box"><span>⌕</span><input id="movie-search" placeholder="Search movies..." aria-label="Search movies"></div><select id="language-filter" aria-label="Filter by language"><option value="all">All languages</option><option value="English">English</option><option value="Tamil">Tamil</option></select></div></div>
+      <div class="movie-grid" id="movie-grid"><div class="loading-card">Loading the lineup…</div></div>
+    </section>
+
+    <section class="experience-strip" id="how"><div class="experience-icon">✦</div><div><div class="eyebrow">THE CINEBOOK PROMISE</div><h3>Your seat. Your story. Your night.</h3><p>Live seat availability, instant demo confirmation, and a ticket you can keep.</p></div><div class="experience-steps"><span><b>01</b> Choose</span><span><b>02</b> Select seats</span><span><b>03</b> Get ticket</span></div></section>
+
+    <section class="admin-section" id="admin">
+      <div class="section-head"><div><div class="eyebrow">CONTROL ROOM</div><h2>Admin studio<span>.</span></h2><p>Manage movies, showtimes and booking records.</p></div><div class="admin-lock" id="admin-status">⌑ Admin locked</div></div>
+      <div class="admin-login panel">
+        <div class="admin-login-copy"><b>Administrator access</b><p>Enter the admin key configured in your environment variables.</p></div>
+        <div class="admin-login-controls"><input type="password" id="admin-key" placeholder="Admin key" autocomplete="current-password"><button class="button button-dark" id="admin-login-btn">Unlock studio ↗</button></div>
+      </div>
+      <div id="admin-content" class="hidden">
+        <div class="admin-stats" id="admin-stats"></div>
+        <div class="admin-grid">
+          <div class="panel admin-form-panel"><div class="panel-title"><div><div class="eyebrow">CATALOGUE</div><h3>Add a movie</h3></div><span class="mini-star">✦</span></div>
+            <form id="movie-form">
+              <label>Movie title<input name="title" required maxlength="120" placeholder="Movie title"></label>
+              <div class="two-fields"><label>Genre<input name="genre" required placeholder="Action · Drama"></label><label>Language<input name="language" required placeholder="Tamil"></label></div>
+              <div class="two-fields"><label>Duration (min)<input name="duration" type="number" min="30" max="400" required value="150"></label><label>Rating / 10<input name="rating" type="number" min="0" max="10" step="0.1" required value="8.0"></label></div>
+              <label>Poster image URL<input name="poster" type="url" placeholder="https://..."></label>
+              <label>Synopsis<textarea name="synopsis" required maxlength="600" rows="3" placeholder="Short movie description"></textarea></label>
+              <label>Accent colour<input name="accent" type="text" value="#8b5cf6" placeholder="#8b5cf6"></label>
+              <label class="check-label"><input name="featured" type="checkbox"> Feature this movie</label>
+              <button class="button button-gold full" type="submit">＋ Add movie</button>
+            </form>
+          </div>
+          <div class="panel admin-form-panel"><div class="panel-title"><div><div class="eyebrow">SHOW SCHEDULE</div><h3>Create a showtime</h3></div><span class="mini-star">◷</span></div>
+            <form id="show-form">
+              <label>Movie<select name="movieId" id="admin-movie-select" required></select></label>
+              <div class="two-fields"><label>Date<input name="date" type="date" required></label><label>Time<input name="time" type="time" required value="19:00"></label></div>
+              <div class="two-fields"><label>Screen<input name="screen" required value="Screen 1"></label><label>Price (₹)<input name="price" type="number" min="1" max="10000" required value="180"></label></div>
+              <label>Total seats (12–120)<input name="totalSeats" type="number" min="12" max="120" required value="60"></label>
+              <button class="button button-dark full" type="submit">＋ Create showtime</button>
+            </form>
+            <div class="panel-title recent-title"><div><div class="eyebrow">LATEST ACTIVITY</div><h3>Recent bookings</h3></div></div>
+            <div id="recent-bookings" class="recent-bookings"><p class="muted">Unlock admin to view booking activity.</p></div>
+          </div>
+        </div>
+        <div class="panel admin-movies"><div class="panel-title"><div><div class="eyebrow">MOVIE INVENTORY</div><h3>Manage movies</h3></div><button class="text-button" id="refresh-admin">↻ Refresh</button></div><div id="admin-movie-list" class="admin-movie-list"></div></div>
+      </div>
+    </section>
+  </main>
+  <footer><a class="logo footer-logo" href="#"><span class="logo-symbol">C</span><span>CINE<span class="logo-accent">BOOK</span><small>THE MOVIE EXPERIENCE</small></span></a><p>Made for movie lovers. Built for a smarter booking experience.</p><span class="footer-right">DEMO PAYMENT ONLY · NO REAL MONEY COLLECTED</span></footer>
+
+  <div class="modal-backdrop hidden" id="booking-modal" role="dialog" aria-modal="true" aria-labelledby="booking-title">
+    <div class="modal modal-wide"><button class="modal-close" data-close="booking-modal" aria-label="Close">×</button><div class="modal-kicker">YOUR CINEMA MOMENT</div><h2 id="booking-title">Pick your seats<span>.</span></h2><div class="booking-movie-info" id="booking-movie-info"></div>
+      <div id="booking-step">
+        <div class="showtime-row"><label for="show-select">Showtime</label><select id="show-select"></select><span id="show-price"></span></div>
+        <div class="screen-wrap"><div class="screen-glow"></div><div class="screen-shape">SCREEN</div></div>
+        <div class="seat-legend"><span><i class="seat-dot available"></i>Available</span><span><i class="seat-dot selected"></i>Selected</span><span><i class="seat-dot booked"></i>Booked</span></div>
+        <div id="seat-map" class="seat-map"></div>
+        <div class="booking-summary"><div><small>SELECTED SEATS</small><strong id="selected-seats-label">None</strong></div><div class="summary-price"><small>TOTAL AMOUNT</small><strong id="selected-total">₹0</strong></div></div>
+        <div class="customer-fields"><label>Full name<input id="customer-name" maxlength="100" placeholder="Your name" required></label><label>Email address<input id="customer-email" type="email" maxlength="160" placeholder="you@example.com" required></label></div>
+        <div class="demo-payment"><span>✓</span><div><b>Demo checkout</b><small>No real payment will be taken. A simulated payment record is saved for your competition demo.</small></div><span class="demo-tag">₹ DEMO</span></div>
+        <button class="button button-gold full" id="confirm-booking">Confirm demo booking <span>↗</span></button>
+      </div>
+      <div id="ticket-result" class="hidden"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="find-modal" role="dialog" aria-modal="true" aria-labelledby="find-title">
+    <div class="modal"><button class="modal-close" data-close="find-modal" aria-label="Close">×</button><div class="modal-kicker">YOUR BOOKINGS</div><h2 id="find-title">Find your ticket<span>.</span></h2><p class="modal-sub">Enter your booking code to view or cancel a ticket.</p><form id="find-booking-form"><label>Booking code<input id="find-code" required placeholder="CB-1A2B3C4D"></label><label>Email used for booking<input id="find-email" type="email" required placeholder="you@example.com"></label><button class="button button-gold full" type="submit">Find ticket</button></form><div id="found-ticket"></div></div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

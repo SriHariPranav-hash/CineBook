@@ -1,0 +1,16 @@
+{
+  "name": "cinebook-movie-ticket-booking",
+  "version": "1.0.0",
+  "description": "CineBook movie ticket booking system with MongoDB Atlas",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongodb": "^6.12.0"
+  }
+}
